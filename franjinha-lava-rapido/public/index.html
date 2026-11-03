@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Franjinha Lava Rápido – Agende sua lavagem</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&display=swap">
+<style>
+:root{--bg:#05080d;--bg2:#0a111a;--card:#0e1722;--ln:#1b2a3a;--tx:#f2f7fb;--mut:#8fa3b5;--pri:#1e9bff;--pri2:#5cc2ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(5,8,13,.9);z-index:60}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(5,8,13,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--ln)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+nav b{font-weight:800;letter-spacing:.3px}nav b span{color:var(--pri)}
+.btn{display:inline-block;border:0;cursor:pointer;text-decoration:none;color:#fff;font:800 .9rem Montserrat,system-ui,sans-serif;padding:12px 22px;border-radius:999px;background:linear-gradient(135deg,#1e9bff,#0a62d6);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 22px rgba(30,155,255,.35)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(30,155,255,.5)}
+.btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 3.5s infinite}
+@keyframes shine{0%,60%{left:-80%}100%{left:140%}}
+.hero{position:relative;text-align:center;padding:48px 0 70px;overflow:hidden;background:radial-gradient(ellipse at 50% 20%,rgba(30,155,255,.25),transparent 60%)}
+.hero .wrap{position:relative;z-index:2}
+.logo{width:250px;max-width:68%;border-radius:26px;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 18px 40px rgba(30,155,255,.35))}
+@keyframes float{50%{transform:translateY(-12px)}}
+h1{font-size:clamp(1.7rem,5.5vw,2.8rem);line-height:1.12;font-weight:900;margin:26px 0 12px}
+h1 em{font-style:normal;color:var(--pri2)}
+.sub{color:var(--mut);max-width:520px;margin:0 auto 26px}
+.bub{position:absolute;bottom:-40px;border-radius:50%;border:1.5px solid rgba(92,194,255,.55);background:rgba(92,194,255,.08);animation:rise linear infinite;z-index:1}
+@keyframes rise{to{transform:translateY(-640px) translateX(24px);opacity:0}}
+section{padding:54px 0}
+.tag{color:var(--pri);font-weight:800;font-size:.78rem;letter-spacing:2px;text-transform:uppercase}
+h2{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;margin:6px 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px;transition:transform .3s,border-color .3s,box-shadow .3s}
+.price:hover{transform:translateY(-6px);border-color:var(--pri);box-shadow:0 14px 40px rgba(30,155,255,.18)}
+.price h3{margin:0 0 14px;font-size:1.1rem}
+.pr{display:flex;justify-content:space-between;align-items:flex-end;padding:11px 0}
+.pr span{color:var(--mut);font-size:.85rem}.pr small{display:block;font-size:.66rem;color:var(--mut);text-align:right}
+.pr b{font-size:1.55rem;font-weight:900;color:var(--pri2);line-height:1}
+.pr{width:100%;background:none;border:0;border-top:1px solid var(--ln);color:var(--tx);font:inherit;cursor:pointer;text-align:left;border-radius:0;transition:background .2s}
+.pr:hover{background:rgba(30,155,255,.07)}
+.pr.on{background:rgba(30,155,255,.16);box-shadow:inset 3px 0 0 var(--pri);padding-left:10px}
+.pnl{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s ease}
+.open .pnl{grid-template-rows:1fr}.pin{overflow:hidden;min-height:0}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.sl{padding:10px 0;border:1.5px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);font:700 .85rem Montserrat,sans-serif;cursor:pointer;transition:all .2s}
+.sl:hover:not(:disabled){border-color:var(--pri)}
+.sl.on{background:var(--pri);border-color:var(--pri);color:#fff;transform:scale(1.06)}
+.sl:disabled{opacity:.3;cursor:not-allowed}
+.step{text-align:center}
+.step i{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 12px;border-radius:50%;background:rgba(30,155,255,.14);color:var(--pri2);font:900 1.1rem Montserrat,sans-serif;border:1px solid var(--pri)}
+.step p{color:var(--mut);margin:6px 0 0;font-size:.9rem}
+.bg2{background:var(--bg2);border-block:1px solid var(--ln)}
+label{display:block;font-weight:700;font-size:.82rem;margin:16px 0 7px;color:var(--mut)}
+input,select{width:100%;padding:13px;border:1px solid var(--ln);border-radius:12px;background:var(--bg);color:var(--tx);font:500 1rem Montserrat,system-ui,sans-serif;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{outline:0;border-color:var(--pri);box-shadow:0 0 0 3px rgba(30,155,255,.2)}
+.opts{display:grid;gap:8px;grid-template-columns:repeat(3,1fr)}
+.opt{border:1.5px solid var(--ln);border-radius:12px;padding:12px 4px;text-align:center;cursor:pointer;background:var(--bg);font-size:.85rem;font-weight:700;transition:all .2s}
+.opt:hover{border-color:var(--pri)}
+.opt.on{border-color:var(--pri);background:rgba(30,155,255,.16);color:var(--pri2);transform:scale(1.03)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.total{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 16px;border-radius:14px;background:rgba(30,155,255,.1);border:1px solid rgba(30,155,255,.3);font-weight:700}
+.total small{display:block;color:var(--mut);font-weight:500;font-size:.7rem}
+.total b{font-size:1.8rem;font-weight:900;color:var(--pri2)}
+form-btn,.go{width:100%;margin-top:16px;padding:16px;font-size:1rem}
+.err{color:#ff6b6b;font-size:.85rem;min-height:1.2em;margin-top:8px}
+footer{text-align:center;color:var(--mut);font-size:.8rem;padding:30px 18px}
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+.ext{padding:12px 0 2px;border-top:1px solid var(--ln);color:var(--mut);font-size:.82rem}.ext b{color:var(--pri2)}
+.chk{display:flex;gap:10px;align-items:center;margin:16px 0 0;padding:12px;border:1.5px solid var(--ln);border-radius:12px;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--tx)}.chk input{width:20px;height:20px;padding:0;accent-color:var(--pri)}
+.pr{border:1px solid var(--ln);border-radius:12px;padding:11px 14px;margin-top:8px;outline:none;transition:border-color .25s,background .25s,transform .15s}
+.pr:active{transform:scale(.98)}
+.pr.on{background:rgba(30,155,255,.12);border-color:var(--pri);box-shadow:none;padding-left:14px}
+.pr:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+button,.sl,.opt,.pr{-webkit-tap-highlight-color:transparent}
+.wa{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;align-items:center;gap:8px;width:60px;height:60px;justify-content:center;padding:0;border-radius:999px;background:#25d366;color:#fff;font:800 .95rem Montserrat,system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 26px rgba(37,211,102,.45);animation:pulse 2.4s infinite;transition:transform .2s;-webkit-tap-highlight-color:transparent}
+.wa:hover{transform:scale(1.06)}
+@keyframes pulse{0%{box-shadow:0 8px 26px rgba(37,211,102,.45),0 0 0 0 rgba(37,211,102,.5)}70%,100%{box-shadow:0 8px 26px rgba(37,211,102,.45),0 0 0 16px rgba(37,211,102,0)}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>FRANJINHA <span>LAVA RÁPIDO</span></b></div></nav>
+
+<div class="hero">
+<div id="bubs"></div>
+<div class="wrap">
+<img class="logo" src="logo.webp" alt="Franjinha Lava Rápido">
+<h1>Seu carro limpo, <em>rápido</em><br>e com hora marcada</h1>
+<p class="sub">Escolha o serviço, o horário e agende pelo WhatsApp em poucos segundos.</p>
+<a href="#precos" class="btn">Agendar minha lavagem</a>
+</div>
+</div>
+
+<section id="precos"><div class="wrap">
+<div class="tag rv">Tabela de preços</div>
+<h2 class="rv">Lavagem externa</h2>
+<p class="rv" style="color:var(--mut);margin:-14px 0 22px">Toque em com cera ou sem cera para escolher o horário.</p>
+<div class="grid" id="cards" style="align-items:start"></div>
+</div></section>
+
+<section class="bg2"><div class="wrap">
+<div class="tag rv">Simples assim</div>
+<h2 class="rv">Como funciona</h2>
+<div class="grid">
+<div class="step rv"><i>1</i><b>Escolha</b><p>Selecione seu veículo e o tipo de lavagem.</p></div>
+<div class="step rv"><i>2</i><b>Agende</b><p>Defina o dia e o horário que ficam bons para você.</p></div>
+<div class="step rv"><i>3</i><b>Confirme</b><p>Enviamos o pedido pelo WhatsApp e confirmamos com você.</p></div>
+</div>
+</div></section>
+
+<footer>© Franjinha Lava Rápido • Atendimento com hora marcada</footer>
+
+<a class="wa" href="https://wa.me/5513955482471?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20lava%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Agendar pelo WhatsApp"><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M12.04 2a9.9 9.9 0 0 0-8.4 15.1L2 22l5-1.6A9.9 9.9 0 1 0 12.04 2zm5.8 14.1c-.25.7-1.4 1.3-1.95 1.35-.5.05-1.1.2-3.7-.8-3.1-1.25-5.1-4.4-5.25-4.6-.15-.2-1.25-1.65-1.25-3.15s.8-2.25 1.1-2.55c.25-.3.6-.35.8-.35h.55c.2 0 .4 0 .6.45.25.55.8 1.95.85 2.1.05.15.1.3 0 .5-.1.2-.15.3-.3.5l-.45.5c-.15.15-.3.3-.15.6.15.3.7 1.15 1.5 1.85 1 .9 1.9 1.2 2.2 1.3.3.15.45.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.25.65-.15.25.1 1.65.8 1.95.95.3.15.5.2.55.3.1.1.1.65-.15 1.35z"/></svg></a>
+
+<script>
+document.documentElement.classList.add("js");
+var WHATSAPP="5513955482471";
+var VEIC={sedan:{n:"Sedan / Hatch",cera:35,sem:30},suv:{n:"SUV",cera:40,sem:35},cam:{n:"Caminhonete",cera:45,sem:40}};
+var $=function(i){return document.getElementById(i)},p=function(n){return n<10?"0"+n:n};
+function hojeStr(){var d=new Date();return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function count(el,from,to){var t0=null;function f(t){if(!t0)t0=t;var k=Math.min((t-t0)/400,1);el.textContent="R$ "+Math.round(from+(to-from)*k);if(k<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+var cards=[];
+Object.keys(VEIC).forEach(function(k){
+var V=VEIC[k],c=document.createElement("div");c.className="card price rv";
+function row(s,l){return '<button class="pr" data-s="'+s+'"><span>'+l+'</span><div><small>a partir de</small><b>R$ '+V[s]+'</b></div></button>'}
+c.innerHTML='<h3>'+V.n+'</h3>'+row("cera","Com cera")+row("sem","Sem cera")+'<div class="ext">+ Limpeza interna: <b>R$ 15</b> a mais</div>'+
+'<div class="pnl"><div class="pin"><div class="frm"><label>Data</label><input type="date" class="dt"><label>Horário</label><div class="slots"></div><label>Seu nome</label><input class="nm" placeholder="Nome" autocomplete="name"><label>Seu WhatsApp</label><input class="tl" type="tel" placeholder="(13) 99999-9999" autocomplete="tel"><label class="chk"><input type="checkbox" class="in"> Adicionar limpeza interna (+ R$ 15)</label><div class="total"><div>Valor<small>a partir de</small></div><b class="vl"></b></div><button class="btn go">Agendar</button><div class="err"></div></div><div class="done" style="display:none;text-align:center;padding:18px 0"><div style="font-size:2.4rem">✅</div><b>Agendamento confirmado!</b><p class="dm" style="color:var(--mut);font-size:.9rem"></p></div></div></div>';
+$("cards").appendChild(c);
+var s=null,hr=null,shown=0,dt=c.querySelector(".dt"),sl=c.querySelector(".slots"),vl=c.querySelector(".vl"),err=c.querySelector(".err"),inn=c.querySelector(".in"),taken=[];
+dt.min=hojeStr();dt.value=hojeStr();
+function draw(){sl.innerHTML="";var h=new Date().getHours(),hoje=dt.value===hojeStr();
+if(hr!==null&&(taken.indexOf(p(hr)+":00")>=0||(hoje&&hr<=h)))hr=null;
+for(var i=8;i<=17;i++){var b=document.createElement("button");b.className="sl"+(hr===i?" on":"");b.textContent=p(i)+":00";b.disabled=taken.indexOf(p(i)+":00")>=0||(hoje&&i<=h);(function(i){b.onclick=function(){hr=i;draw()}})(i);sl.appendChild(b)}}
+function slots(){fetch("/api/horarios?data="+dt.value).then(function(r){return r.json()}).then(function(j){taken=j.ocupados||[];draw()}).catch(function(){taken=[];draw()})}
+dt.addEventListener("change",slots);inn.addEventListener("change",function(){if(!s)return;var n=V[s]+(inn.checked?15:0);count(vl,shown,n);shown=n});draw();
+function close(){s=null;c.classList.remove("open");[].forEach.call(c.querySelectorAll(".pr"),function(b){b.classList.remove("on")})}
+c._close=close;
+[].forEach.call(c.querySelectorAll(".pr"),function(b){b.addEventListener("click",function(){
+var x=b.getAttribute("data-s");
+if(s===x){close();return}
+cards.forEach(function(o){if(o!==c)o._close()});
+s=x;[].forEach.call(c.querySelectorAll(".pr"),function(r){r.classList.toggle("on",r===b)});
+c.querySelector(".frm").style.display="";c.querySelector(".done").style.display="none";
+var n0=V[x]+(inn.checked?15:0);count(vl,shown,n0);shown=n0;
+if(!c.classList.contains("open")){c.classList.add("open");slots();setTimeout(function(){c.scrollIntoView({behavior:"smooth",block:"nearest"})},350)}
+})});
+var go=c.querySelector(".go");
+go.addEventListener("click",function(){
+var nome=c.querySelector(".nm").value.trim(),tel=c.querySelector(".tl").value;
+if(!nome||!tel||hr===null||!dt.value){err.textContent="Escolha o horário e preencha nome e WhatsApp.";return}
+err.textContent="";go.disabled=true;go.textContent="Enviando...";
+fetch("/api/agendar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nome:nome,tel:tel,veic:k,serv:s,interna:inn.checked,data:dt.value,hora:p(hr)+":00"})})
+.then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+.then(function(x){go.disabled=false;go.textContent="Agendar";
+if(!x.ok){err.textContent=x.j.erro||"Erro ao agendar.";slots();return}
+var q=dt.value.split("-").reverse().join("/")+" às "+p(hr)+":00";
+c.querySelector(".dm").textContent=V.n+" · "+(s==="cera"?"com cera":"sem cera")+(inn.checked?" + limpeza interna":"")+" · "+q;
+c.querySelector(".frm").style.display="none";c.querySelector(".done").style.display="block";
+hr=null;inn.checked=false;shown=0;c.querySelector(".nm").value="";c.querySelector(".tl").value="";
+}).catch(function(){go.disabled=false;go.textContent="Agendar";err.textContent="Sem conexão. Tente de novo."})});
+cards.push(c);
+});
+var hb=$("bubs");
+for(var j=0;j<18;j++){var b=document.createElement("span"),z=8+Math.random()*26;b.className="bub";b.style.cssText="left:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;animation-duration:"+(7+Math.random()*8)+"s;animation-delay:-"+Math.random()*12+"s";hb.appendChild(b)}
+var rv=document.querySelectorAll(".rv");
+if("IntersectionObserver"in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+[].forEach.call(rv,function(el,i){el.style.transitionDelay=(i%3)*0.1+"s";io.observe(el)})}else{[].forEach.call(rv,function(el){el.classList.add("in")})}
+</script>
+</body>
+</html>

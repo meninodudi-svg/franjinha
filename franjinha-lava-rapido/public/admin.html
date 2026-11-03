@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel – Franjinha Lava Rápido</title>
+<style>
+:root{--bg:#05080d;--card:#0e1722;--ln:#1b2a3a;--tx:#f2f7fb;--mut:#8fa3b5;--pri:#1e9bff;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:18px}
+.w{max-width:680px;margin:0 auto}h1{font-size:1.3rem}
+input,button{font:inherit;border-radius:10px;border:1px solid var(--ln);background:var(--card);color:var(--tx);padding:12px}
+button{cursor:pointer}.pri{background:var(--pri);border-color:var(--pri);font-weight:700}
+.it{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:14px;margin:10px 0}
+.it>div{flex:1;min-width:0}.it small{display:block;color:var(--mut)}.it.ok{opacity:.45}.it.ok b{text-decoration:line-through}
+.it a{color:var(--pri);text-decoration:none;font-weight:700}.d{margin:22px 0 4px;color:var(--mut);font-weight:700;font-size:.85rem}
+.it button{width:40px;height:40px;padding:0}
+</style></head><body><div class="w">
+<h1>📅 Agenda – Franjinha Lava Rápido</h1>
+<div id="login"><input id="sn" type="password" placeholder="Senha do painel"> <button class="pri" onclick="entrar()">Entrar</button><p id="er" style="color:#ff6b6b"></p></div>
+<div id="lista"></div></div>
+<script>
+var S=sessionStorage.getItem("s")||"",$=function(i){return document.getElementById(i)};
+function api(m,u){return fetch(u,{method:m,headers:{"x-senha":S}})}
+function entrar(){S=$("sn").value;carrega()}
+function carrega(){api("GET","/api/admin/agendamentos").then(function(r){if(r.status===401){sessionStorage.removeItem("s");$("login").style.display="";if(S)$("er").textContent="Senha incorreta.";return null}return r.json()}).then(function(l){
+if(!l)return;sessionStorage.setItem("s",S);$("login").style.display="none";var L=$("lista");L.innerHTML="";
+if(!l.length){L.innerHTML='<p style="color:var(--mut)">Nenhum agendamento ainda.</p>';return}
+var last="";l.forEach(function(x){var d=x.data.split("-").reverse().join("/");
+if(d!==last){var h=document.createElement("div");h.className="d";h.textContent=d;L.appendChild(h);last=d}
+var it=document.createElement("div");it.className="it"+(x.feito?" ok":"");
+var t=document.createElement("div"),b=document.createElement("b"),m=document.createElement("small"),a=document.createElement("a");
+b.textContent=x.hora+" · "+x.nome;m.textContent={sedan:"Sedan/Hatch",suv:"SUV",cam:"Caminhonete"}[x.veic]+" · "+(x.serv==="cera"?"com cera":"sem cera")+(x.interna?" + limpeza interna":"")+" · a partir de R$ "+x.valor;
+a.textContent="WhatsApp: "+x.tel;a.target="_blank";a.href="https://wa.me/"+(x.tel.length<=11?"55"+x.tel:x.tel);
+t.appendChild(b);t.appendChild(m);t.appendChild(a);it.appendChild(t);
+var ok=document.createElement("button");ok.textContent="✓";ok.onclick=function(){api("PATCH","/api/admin/"+x.id).then(carrega)};
+var de=document.createElement("button");de.textContent="✕";de.onclick=function(){if(confirm("Excluir este agendamento?"))api("DELETE","/api/admin/"+x.id).then(carrega)};
+it.appendChild(ok);it.appendChild(de);L.appendChild(it)})})}
+if(S)carrega();setInterval(function(){if(S&&$("login").style.display==="none")carrega()},15000);
+</script></body></html>

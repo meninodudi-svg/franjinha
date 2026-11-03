@@ -1,0 +1,16 @@
+FRANJINHA LAVA RÁPIDO – site com agendamento salvo
+
+1) Instale o Node.js 18+ (nodejs.org)
+2) Nesta pasta, rode:   node server.js
+3) Site:   http://localhost:3000
+   Painel: http://localhost:3000/admin   (senha padrão: franjinha123)
+
+TROQUE A SENHA antes de publicar:
+   ADMIN_PASSWORD="sua-senha" node server.js
+
+Os agendamentos ficam no arquivo data.json.
+Hospede em um servidor que guarda arquivos (VPS, Render com disco, Railway com volume).
+Não use hospedagem que apaga arquivos (ex.: Vercel).
+
+Na hospedagem, crie um disco e aponte a variável DATA_DIR para a pasta do disco
+(ex.: DATA_DIR=/var/data) para os agendamentos não serem apagados.
